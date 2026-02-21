@@ -163,9 +163,9 @@ export default function Hero({ onCtaClick }: { onCtaClick: () => void }) {
       />
 
       <div className="max-w-7xl mx-auto px-5 md:px-10 lg:px-16 w-full pt-24 pb-16 md:pt-32 md:pb-20 relative z-10">
-        <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-center">
+        <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-center justify-between">
           {/* Left column — 58% */}
-          <div className="lg:w-[58%]">
+          <div className="lg:w-[58%] flex-shrink-0">
             {/* Label */}
             <div
               className="flex items-center gap-3 mb-8 opacity-0 animate-fade-up"
@@ -256,7 +256,7 @@ export default function Hero({ onCtaClick }: { onCtaClick: () => void }) {
           </div>
 
           {/* Right column — 42% */}
-          <div className="lg:w-[42%] w-full">
+          <div className="lg:w-[42%] w-full flex-shrink-0">
             <LiveOperationsPanel />
           </div>
         </div>

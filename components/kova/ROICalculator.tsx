@@ -38,7 +38,7 @@ export default function ROICalculator({ onCtaClick }: { onCtaClick: () => void }
   return (
     <section id="calculator" className="py-32 md:py-48">
       <div className="max-w-7xl mx-auto px-5 md:px-10 lg:px-16">
-        <SectionLabel number="05" label="CALCULATOR" />
+        <SectionLabel number="03" label="CALCULATOR" />
         <h2
           ref={ref}
           className={`font-sans font-black text-kova-white mb-4 opacity-0 ${isInView ? 'animate-fade-up' : ''}`}

@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState, useEffect } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import SectionLabel from './SectionLabel';
 import BeforeAfterReveal from './BeforeAfterReveal';
 import { useInView } from '@/hooks/use-in-view';
@@ -77,6 +78,8 @@ function CaseCard({
 export default function Work() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
 
   useEffect(() => {
     const container = scrollContainerRef.current;
@@ -88,18 +91,29 @@ export default function Work() {
         ? scrollLeft / (scrollWidth - clientWidth)
         : 0;
       setScrollProgress(progress);
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
     };
 
     container.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => container.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const scroll = (direction: 'left' | 'right') => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const scrollAmount = direction === 'left' ? -500 : 500;
+    container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  };
 
   const [ref, isInView] = useInView();
 
   return (
     <section id="work" className="py-32 md:py-48">
       <div className="max-w-7xl mx-auto px-5 md:px-10 lg:px-16">
-        <SectionLabel number="04" label="WORK" />
+        <SectionLabel number="02" label="WORK" />
         <h2
           ref={ref}
           className={`font-sans font-black text-kova-white mb-12 opacity-0 ${isInView ? 'animate-fade-up' : ''}`}
@@ -114,19 +128,41 @@ export default function Work() {
         </h2>
       </div>
 
-      {/* Horizontal scroll cases */}
-      <div className="marquee-fade">
-        <div
-          ref={scrollContainerRef}
-          className="overflow-x-auto scrollbar-hide pb-4 px-5 md:px-10 lg:px-16"
-          style={{ scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch' }}
+      {/* Horizontal scroll cases with navigation */}
+      <div className="relative">
+        {/* Previous button */}
+        <button
+          onClick={() => scroll('left')}
+          disabled={!canScrollLeft}
+          className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 z-20 items-center justify-center w-12 h-12 rounded-full border border-kova-border hover:border-kova-border-md bg-kova-void/80 backdrop-blur-sm transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed hover:enabled:shadow-[0_0_30px_rgba(200,200,208,0.1)]"
+          aria-label="Scroll previous"
         >
-          <div className="flex gap-4 md:gap-5">
-            {CASE_STUDIES.map((cs) => (
-              <CaseCard key={cs.id} {...cs} />
-            ))}
+          <ChevronLeft size={20} className="text-kova-chrome" />
+        </button>
+
+        <div className="marquee-fade">
+          <div
+            ref={scrollContainerRef}
+            className="overflow-x-auto scrollbar-hide pb-4 px-5 md:px-10 lg:px-16"
+            style={{ scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch' }}
+          >
+            <div className="flex gap-4 md:gap-5">
+              {CASE_STUDIES.map((cs) => (
+                <CaseCard key={cs.id} {...cs} />
+              ))}
+            </div>
           </div>
         </div>
+
+        {/* Next button */}
+        <button
+          onClick={() => scroll('right')}
+          disabled={!canScrollRight}
+          className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 z-20 items-center justify-center w-12 h-12 rounded-full border border-kova-border hover:border-kova-border-md bg-kova-void/80 backdrop-blur-sm transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed hover:enabled:shadow-[0_0_30px_rgba(200,200,208,0.1)]"
+          aria-label="Scroll next"
+        >
+          <ChevronRight size={20} className="text-kova-chrome" />
+        </button>
       </div>
 
       {/* Scroll progress */}

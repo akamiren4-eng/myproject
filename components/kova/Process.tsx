@@ -66,7 +66,7 @@ export default function Process() {
   return (
     <section id="process" className="py-32 md:py-48">
       <div className="max-w-7xl mx-auto px-5 md:px-10 lg:px-16">
-        <SectionLabel number="07" label="PROCESS" />
+        <SectionLabel number="05" label="PROCESS" />
         <h2
           ref={ref}
           className={`font-sans font-black text-kova-white mb-2 opacity-0 ${isInView ? 'animate-fade-up' : ''}`}

@@ -55,7 +55,7 @@ const SocialProof = React.memo(function SocialProof() {
   return (
     <section id="clients" className="py-32 md:py-48">
       <div className="max-w-7xl mx-auto px-5 md:px-10 lg:px-16">
-        <SectionLabel number="08" label="CLIENTS" />
+        <SectionLabel number="06" label="CLIENTS" />
         <h2
           ref={ref}
           className={`font-sans font-black text-kova-white mb-2 opacity-0 ${isInView ? 'animate-fade-up' : ''}`}
